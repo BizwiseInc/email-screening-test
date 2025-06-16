@@ -1,0 +1,26 @@
+{
+  "name": "email-screening-test",
+  "version": "1.0.0",
+  "description": "Email Screening boilerplate with Express, TypeScript, and OpenAI integration",
+  "main": "dist/server.js",
+  "scripts": {
+    "start": "node dist/server.js",
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "openai": "^5.3.0",
+    "typescript": "^5.8.3"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.0.1",
+    "tsx": "^4.20.3"
+  }
+}
