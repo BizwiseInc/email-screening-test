@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import { createChatCompletion } from './llm/createChatCompletion';
-import { emailService, messageDb, CreateEmailRequest } from './services';
+import { supportTicketService, messageDb, Email } from './services';
 
 
 interface MessageRequest {
@@ -9,7 +9,7 @@ interface MessageRequest {
 }
 
 interface EmailRequest {
-  emails: CreateEmailRequest[]
+  emails: Email[]
 }
 
 const app = express();
@@ -45,10 +45,17 @@ app.post('/emails', async (req: Request, res: Response) => {
     }
 
     for (const email of emails) {
-      await emailService.createEmail(email);
-     
+      
+      const ticketData = {
+        emails: [email],
+        type: 'support' as const,
+        category: 'unclassified'
+      };
+
+      await supportTicketService.createTicket(ticketData);
     }
-    console.log(await emailService.getAllEmails())
+    
+    console.log(await supportTicketService.getAllTickets())
 
     res.json({ success: true });
   } catch (error) {
