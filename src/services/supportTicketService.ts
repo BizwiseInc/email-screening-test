@@ -85,6 +85,26 @@ class SupportTicketService {
     return this.tickets.update(ticketId, { emails: updatedEmails });
   }
 
+  async updateDraft(ticketId: string, emailId: string, updatedDraftData: Partial<Omit<Email, 'id' | 'draft'>>): Promise<SupportTicket> {
+    const ticket = await this.getTicket(ticketId);
+    if (!ticket) {
+      throw new Error(`Ticket ${ticketId} not found`);
+    }
+
+    const emailIndex = ticket.emails.findIndex(email => email.id === emailId && email.draft === true);
+    if (emailIndex === -1) {
+      throw new Error(`Draft email ${emailId} not found in ticket ${ticketId}`);
+    }
+
+    const updatedEmails = [...ticket.emails];
+    updatedEmails[emailIndex] = {
+      ...updatedEmails[emailIndex],
+      ...updatedDraftData
+    };
+
+    return this.tickets.update(ticketId, { emails: updatedEmails });
+  }
+
   async getTicketsWithDrafts(): Promise<SupportTicket[]> {
     const tickets = await this.tickets.list();
     return tickets.filter(ticket =>
