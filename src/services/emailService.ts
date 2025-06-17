@@ -7,6 +7,7 @@ export interface Email {
   subject: string;
   body: string;
   classification: 'support' | 'billing' | 'spam';
+  draft?: boolean;
 }
 
 export type CreateEmailRequest = Omit<Email, 'id'>;
