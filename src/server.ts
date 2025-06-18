@@ -49,7 +49,6 @@ app.post('/emails', async (req: Request, res: Response) => {
       const ticketData = {
         emails: [email],
         type: 'support' as const,
-        category: 'unclassified'
       };
 
       await supportTicketService.createTicket(ticketData);
